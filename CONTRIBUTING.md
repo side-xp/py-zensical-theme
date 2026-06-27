@@ -77,7 +77,7 @@ All commands below assume the virtual environment is **activated** (see above).
 
 ### Live preview
 
-Start a local development server with live reload — the site rebuilds automatically as you edit files in `docs/` or `zensical.toml`:
+Start a local development server with live reload. The site rebuilds automatically as you edit files in `docs/` or `zensical.toml`:
 
 ```bash
 zensical serve
@@ -149,7 +149,7 @@ Releases are generated based on `vX.Y.Z` tags pushed to the repository.
 
 Each release will include a compiled package and changelog.
 
-We currently do **not** require contributors to handle release generation — this is done internally.
+We currently do **not** require contributors to handle release generation (this is done internally).
 
 ## License and Contributor Agreement
 
