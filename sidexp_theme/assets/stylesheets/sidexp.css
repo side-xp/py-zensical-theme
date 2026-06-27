@@ -8,10 +8,10 @@
 /* Light scheme (the default) -------------------------------------------------- */
 :root,
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color:        #ffca40;    /* header, links, primary accents   */
-  --md-primary-fg-color--light: #ffca40;    /* lighter primary variant          */
+  --md-primary-fg-color:        #2d2e35;    /* header, links, primary accents   */
+  --md-primary-fg-color--light: #2d2e35;    /* lighter primary variant          */
   --md-primary-fg-color--dark:  #e4002b;    /* darker primary variant           */
-  --md-accent-fg-color:         #ffca40; /* hover / interactive accent       */
+  --md-accent-fg-color:         #2d2e35; /* hover / interactive accent       */
 }
 
 /* Dark scheme (slate) --------------------------------------------------------- */

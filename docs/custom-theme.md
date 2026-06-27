@@ -125,3 +125,80 @@ Two details matter here:
 - **`{{ super() }}`** keeps the base theme's own `<style>`/`<link>` tags, so your stylesheet is added *after* them. Because it loads last, your variables win — without you having to redefine everything the base theme already provides.
 
 > ✅ **Checkpoint:** Your theme now carries its colors with it. Any site that installs the theme and sets `name = "your-theme"` gets the branding automatically, with no extra CSS on their side. We will confirm the stylesheet actually ships in the built site during the verification step.
+
+## Step 3: Use the theme from a demo site
+
+You need a real site to look at while developing the theme. The simplest option is to keep the original `zensical.toml` + `docs/` (the `zensical new` output you started from) and point it at your own theme. This *demo site* doubles as a showcase and a live-preview harness.
+
+### 3.1 Point the site at your theme
+
+In the site's `zensical.toml`, set the theme name to your entry-point key:
+
+```toml
+[project.theme]
+name = "your-theme"
+```
+
+The name only resolves once the theme package is installed in the same environment (`pip install -e .`), which we set up in the next step — so the site won't build until then.
+
+### 3.2 Activate the custom palette
+
+If your site defines its own `palette` (for example to offer a light/dark toggle), remember that a site's palette **replaces** the theme's default palette rather than merging into it. So repeat `primary` and `accent` here, set to `custom`, or your brand variables from Step 2 won't take effect:
+
+```toml
+[[project.theme.palette]]
+scheme = "default"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+```
+
+> ⚠️ **Heads-up:** Don't run `zensical serve` or `zensical build` yet. Zensical discovers themes only through the installed entry point, so until you install the package (next step) you will get:
+>
+> ```
+> Error: Theme 'your-theme' is not installed. Available themes are:
+> ```
+>
+> That is expected — Step 4 sets up the install that makes the theme resolvable.
+
+## Step 4: Install the theme for local development
+
+The theme becomes discoverable only once its package is installed in the active environment. During development you want an **editable install**, so edits to your templates and stylesheets are picked up without reinstalling every time.
+
+From the repository root, with your virtual environment activated:
+
+```bash
+python -m pip install -e .
+```
+
+This does two things at once:
+
+- pulls in **Zensical** itself (declared under `dependencies` in `pyproject.toml`), and
+- registers your theme's `mkdocs.themes` entry point, so `name = "your-theme"` now resolves.
+
+> ⚠️ The entry point is read **at install time**. If you later edit `pyproject.toml` (for example, rename the theme or change the entry point), re-run `python -m pip install -e .` so Zensical sees the change. Editing templates, `mkdocs_theme.yml`, or CSS does *not* require reinstalling.
+
+### Housekeeping: ignore build artifacts
+
+Working with a Python package produces throwaway files — bytecode caches and packaging build directories. Add them to `.gitignore` so they never get committed:
+
+```gitignore
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+
+# Packaging build artifacts
+/build
+/dist
+*.egg-info/
+```
+
+> ✅ **Checkpoint:** `zensical serve` now starts the demo site with your theme and live reload at <http://localhost:8000>, and `zensical build` produces a branded `site/`. The "Theme is not installed" error from the previous step is gone.
