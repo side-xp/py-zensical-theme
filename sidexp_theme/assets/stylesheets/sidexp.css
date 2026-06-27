@@ -1,0 +1,21 @@
+/* ==========================================================================
+ * Sideways Experiments brand colors for Zensical.
+ *
+ * These custom properties drive the theme's primary/accent colors. They take
+ * effect because mkdocs_theme.yml sets `primary: custom` and `accent: custom`.
+ * ========================================================================== */
+
+/* Light scheme (the default) -------------------------------------------------- */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #ffca40;    /* header, links, primary accents   */
+  --md-primary-fg-color--light: #ffca40;    /* lighter primary variant          */
+  --md-primary-fg-color--dark:  #e4002b;    /* darker primary variant           */
+  --md-accent-fg-color:         #ffca40; /* hover / interactive accent       */
+}
+
+/* Dark scheme (slate) --------------------------------------------------------- */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #ffca40;
+  --md-accent-fg-color:         #ffca40;
+}

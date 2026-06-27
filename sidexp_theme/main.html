@@ -1,0 +1,14 @@
+{#-
+  Theme entry template for the "side-xp" theme.
+
+  We extend Zensical's base template and only override the `styles` block to
+  append our brand stylesheet. `{{ super() }}` keeps all of the base theme's
+  own styles, so our CSS layers on top (and therefore wins) rather than
+  replacing anything.
+-#}
+{% extends "base.html" %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ base_url }}/assets/stylesheets/sidexp.css" />
+{% endblock %}

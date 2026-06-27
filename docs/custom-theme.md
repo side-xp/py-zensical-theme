@@ -68,3 +68,60 @@ extends: material
 At minimum, `extends: material` tells Zensical your theme builds on its default theme rather than replacing it wholesale.
 
 > ✅ **Checkpoint:** After this step you have an installable, *discoverable* theme, though it doesn't change any styling yet. You can already prove the wiring works by running `pip install -e .` and confirming Zensical accepts `name = "your-theme"` without an "unknown theme" error. Branding comes next.
+
+## Step 2: Add your brand styling
+
+Now make the theme actually *look* like yours. Two pieces work together: a stylesheet that defines your colors, and a template override that loads it on every page.
+
+### 2.1 A brand stylesheet
+
+Create `your_theme/assets/stylesheets/your-theme.css`. Zensical (via Material) exposes its colors as [CSS custom properties](https://zensical.org/docs/setup/colors/#custom-colors), so branding is mostly a matter of setting a handful of variables:
+
+```css
+/* Light scheme (the default) */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #4051b5;  /* header, links, primary accents */
+  --md-primary-fg-color--light: #5d6cc0;  /* lighter primary variant        */
+  --md-primary-fg-color--dark:  #303fa1;  /* darker primary variant         */
+  --md-accent-fg-color:         #526cfe;  /* hover / interactive accent     */
+}
+
+/* Dark scheme (slate) */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #5d6cc0;
+  --md-accent-fg-color:  #768cff;
+}
+```
+
+For these variables to take over, tell the palette you are supplying custom colors. Back in `your_theme/mkdocs_theme.yml`:
+
+```yaml
+extends: material
+palette:
+  - scheme: default
+    primary: custom
+    accent: custom
+```
+
+> 💡 **Tip:** while wiring things up, set a deliberately loud color such as `#FF00FF`. If the page turns magenta, you know the stylesheet is loading; then swap in the real values.
+
+### 2.2 Load the stylesheet with a template override
+
+A bundled stylesheet still has to be linked into the page. Zensical uses [MiniJinja templates](https://zensical.org/docs/customization/), and its base template exposes named **blocks** you can override. Create `your_theme/main.html`:
+
+```jinja2
+{% extends "base.html" %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ base_url }}/assets/stylesheets/your-theme.css" />
+{% endblock %}
+```
+
+Two details matter here:
+
+- **`{% extends "base.html" %}`** builds on the base theme instead of replacing it.
+- **`{{ super() }}`** keeps the base theme's own `<style>`/`<link>` tags, so your stylesheet is added *after* them. Because it loads last, your variables win — without you having to redefine everything the base theme already provides.
+
+> ✅ **Checkpoint:** Your theme now carries its colors with it. Any site that installs the theme and sets `name = "your-theme"` gets the branding automatically, with no extra CSS on their side. We will confirm the stylesheet actually ships in the built site during the verification step.
