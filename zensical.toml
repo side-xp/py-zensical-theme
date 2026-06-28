@@ -292,21 +292,11 @@ features = [
 # Read more:
 # - https://zensical.org/docs/setup/colors/
 # ----------------------------------------------------------------------------
-# Both schemes use "custom" primary/accent so the brand colors defined in the
-# theme's stylesheet (sidexp.css) drive the palette.
-[[project.theme.palette]]
-scheme = "default"
-primary = "custom"
-accent = "custom"
-toggle.icon = "lucide/sun"
-toggle.name = "Switch to dark mode"
-
-[[project.theme.palette]]
-scheme = "slate"
-primary = "custom"
-accent = "custom"
-toggle.icon = "lucide/moon"
-toggle.name = "Switch to light mode"
+# No palette is defined here on purpose: the "side-xp" theme already ships a
+# light + dark palette (both using the brand's custom colors) with a toggle
+# switch. This demo therefore inherits the theme's palette by keeping defaults.
+# To customize colors per-site, define your own [[project.theme.palette]]
+# blocks here, which would replace the theme's palette entirely.
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.
