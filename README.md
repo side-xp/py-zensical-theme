@@ -37,7 +37,7 @@ In CI, install the theme alongside your other dependencies before building. For 
 
 ```yaml
 - name: Install dependencies
-  run: pip install git+https://github.com/side-xp/py-zensical-theme@v0.1.0
+  run: pip install git+https://github.com/side-xp/py-zensical-theme
 
 - name: Build documentation
   run: zensical build

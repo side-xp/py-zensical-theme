@@ -4,7 +4,8 @@
     ".": {
       "release-type": "python",
       "package-name": "sidexp-zensical-theme",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "initial-version": "1.0.0"
     }
   }
 }
