@@ -1,0 +1,16 @@
+# Default configuration for the "side-xp" theme.
+#
+# Zensical merges these values into a consumer's project, so anything set here
+# becomes the default for every site that uses `theme.name = "side-xp"`.
+# Consumers can still override any of it in their own zensical.toml.
+
+# Build on top of Zensical's default theme (the Material look). This gives us
+# the full base theme and lets us override only what we need to brand it.
+extends: material
+
+# Opt the palette into custom colors so the brand stylesheet (added in a later
+# step) drives the primary/accent colors out of the box.
+palette:
+  - scheme: default
+    primary: custom
+    accent: custom

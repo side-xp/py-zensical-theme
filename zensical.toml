@@ -72,6 +72,11 @@ Copyright &copy; 2026 The authors
 # ----------------------------------------------------------------------------
 [project.theme]
 
+# Use our installable "side-xp" theme. This name is the entry-point key
+# registered in pyproject.toml; it resolves once the theme package is installed
+# (e.g. `pip install -e .` while developing this repo).
+name = "side-xp"
+
 # change this to "classic" to use the traditional Material for MkDocs look.
 #variant = "classic"
 
@@ -287,13 +292,19 @@ features = [
 # Read more:
 # - https://zensical.org/docs/setup/colors/
 # ----------------------------------------------------------------------------
+# Both schemes use "custom" primary/accent so the brand colors defined in the
+# theme's stylesheet (sidexp.css) drive the palette.
 [[project.theme.palette]]
 scheme = "default"
+primary = "custom"
+accent = "custom"
 toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 scheme = "slate"
+primary = "custom"
+accent = "custom"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
 

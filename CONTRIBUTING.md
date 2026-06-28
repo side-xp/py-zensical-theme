@@ -64,12 +64,16 @@ Once activated, your prompt is prefixed with `(.venv)`.
 
 ### Install the dependencies
 
-With the virtual environment activated, install Zensical:
+With the virtual environment activated, install this project in **editable mode**:
 
 ```bash
 python -m pip install --upgrade pip
-python -m pip install zensical
+python -m pip install -e .
 ```
+
+This pulls in Zensical (declared as a dependency in `pyproject.toml`) **and** registers the `side-xp` theme with Zensical, so the demo site in this repo can render with it. Editable mode (`-e`) means changes to the theme's templates and stylesheets are picked up without reinstalling.
+
+> If you change `pyproject.toml` itself (for example its entry points), re-run `python -m pip install -e .` so Zensical picks up the change.
 
 ## Previewing and building locally
 
@@ -77,7 +81,7 @@ All commands below assume the virtual environment is **activated** (see above).
 
 ### Live preview
 
-Start a local development server with live reload — the site rebuilds automatically as you edit files in `docs/` or `zensical.toml`:
+Start a local development server with live reload. The site rebuilds automatically as you edit files in `docs/` or `zensical.toml`:
 
 ```bash
 zensical serve
@@ -149,7 +153,7 @@ Releases are generated based on `vX.Y.Z` tags pushed to the repository.
 
 Each release will include a compiled package and changelog.
 
-We currently do **not** require contributors to handle release generation — this is done internally.
+We currently do **not** require contributors to handle release generation (this is done internally).
 
 ## License and Contributor Agreement
 

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sidexp-zensical-theme"
+version = "0.1.0"
+description = "Sideways Experiments brand theme for Zensical documentation sites"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.14"
+authors = [{ name = "Hubert Grossin", email = "contact@sideways-experiments.com" }]
+dependencies = ["zensical"]
+
+[project.urls]
+Repository = "https://github.com/side-xp/py-zensical-theme"
+
+[tool.hatch.build.targets.wheel]
+# Bundle the whole theme package, including its non-Python data files (.html templates, .yml config, .css assets).
+include = ["sidexp_theme"]
+
+# Register the theme under the "mkdocs.themes" entry point group so Zensical can discover it. The key ("side-xp") is
+# the name consumers set as `theme.name` in their own zensical.toml; the value is the import package.
+[project.entry-points."mkdocs.themes"]
+side-xp = "sidexp_theme"
