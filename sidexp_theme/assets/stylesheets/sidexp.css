@@ -125,6 +125,10 @@
 }
 .md-header__title {
   font-size: 2.6em;
+  color: var(--brand-white);
+}
+[data-md-color-scheme="slate"] .md-header__title {
+  color: var(--brand-dark);
 }
 .md-header__topic:first-child {
   font-weight: normal;
@@ -226,12 +230,24 @@
   pointer-events: none;
 }
 
-/* Header content (title, icons) sits on the colored header, so it uses the
- * primary "bg" color: white on the dark light-mode header, dark on the amber
- * dark-mode header (--md-primary-bg-color is set per scheme above). */
-.md-header,
-.md-header__title {
-  color: var(--md-primary-bg-color);
+.md-header button {
+  background: color-mix(in srgb, var(--brand-white) 40%, transparent);
+}
+.md-header button:hover {
+  background: color-mix(in srgb, var(--brand-white) 70%, transparent);
+}
+.md-header .md-icon {
+  color: var(--brand-white)
+}
+
+[data-md-color-scheme="slate"] .md-header button {
+  background: color-mix(in srgb, var(--brand-dark) 40%, transparent);
+}
+[data-md-color-scheme="slate"] .md-header button:hover {
+  background: color-mix(in srgb, var(--brand-dark) 70%, transparent);
+}
+[data-md-color-scheme="slate"] .md-header .md-icon {
+  color: var(--brand-dark)
 }
 
 /* The one place red appears: the heading permalink ("¶") anchor icon, which
