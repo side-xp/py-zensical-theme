@@ -7,7 +7,7 @@ site_description = "Demo of Sideways Experiments custom documentation theme usin
 site_author = "Sideways Experiments"
 #site_url = "https://www.example.com/"
 copyright = """
-&copy; 2026 Sideways Experiments
+&copy; 2026 <a href="https://sideways-experiments.com">Sideways Experiments</a>
 """
 
 [project.theme]
