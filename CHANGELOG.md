@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/side-xp/py-zensical-theme/compare/sidexp-zensical-theme-v1.0.0...sidexp-zensical-theme-v1.0.1) (2026-06-28)
+
+
+### Bug Fixes
+
+* removed skew effect ([9844026](https://github.com/side-xp/py-zensical-theme/commit/9844026d1903bf03f73e0378a0a74f09ad2b2fc0))
+
+
+### Documentation
+
+* link to SideXP website ([b54814c](https://github.com/side-xp/py-zensical-theme/commit/b54814c50bd966d5bc97c4f82083235b3bb5b1d1))
+
 ## [1.0.0](https://github.com/side-xp/py-zensical-theme/compare/sidexp-zensical-theme-v0.1.0...sidexp-zensical-theme-v1.0.0) (2026-06-28)
 
 
