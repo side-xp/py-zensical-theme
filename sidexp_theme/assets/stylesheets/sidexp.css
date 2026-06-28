@@ -18,14 +18,15 @@
   --md-shadow-z2: 4px 4px 0 rgba(45, 46, 53, 0.24);
   --md-shadow-z3: 6px 6px 0 rgba(45, 46, 53, 0.28);
 
-  /* Header design — geometry is the same in both schemes (only the colors,
-   * which come from --md-primary-fg-color / --brand-*, differ), so these live
-   * here rather than in a scheme block. */
-  --sidexp-header-cut: 20px;    /* depth of the diagonal cut (right edge higher) */
+  /* Header design */
+  --sidexp-header-cut: 32px;    /* depth of the diagonal cut (right edge higher) */
   --sidexp-hazard-h: 12px;      /* hazard band thickness */
   --sidexp-hazard-w: 16px;      /* hazard stripe width */
   --sidexp-hazard-angle: -45deg;
   --sidexp-header-border: 2px;  /* thickness of the border (header background revealed below the band) */
+
+  /* SideXP design */
+  --sidexp-skew: -20deg;
 }
 
 /***** Light scheme *****/
@@ -48,14 +49,14 @@
   --md-primary-bg-color--light:    rgba(255, 255, 255, 0.70);
 
   /* Accent (hover/active/focus): deep amber/gold, readable on white */
-  --md-accent-fg-color:            #b07d00;
-  --md-accent-fg-color--transparent: rgba(176, 125, 0, 0.10);
+  --md-accent-fg-color:            #977726;
+  --md-accent-fg-color--transparent: #ffca4040;
   --md-accent-bg-color:            var(--brand-white);
   --md-accent-bg-color--light:     rgba(255, 255, 255, 0.70);
 
   /* Content: links are dark + underlined (see §4), amber underline on hover. */
   --md-typeset-a-color:            var(--brand-dark);
-  --md-typeset-mark-color:         rgba(255, 202, 64, 0.50);
+  --md-typeset-mark-color:         #ffca40;
 
   /* Code: subtle brand-tinted surface, dark text */
   --md-code-fg-color:              var(--brand-dark);
@@ -90,7 +91,7 @@
 
   /* Accent: amber, pops on dark */
   --md-accent-fg-color:            var(--brand-amber);
-  --md-accent-fg-color--transparent: rgba(255, 202, 64, 0.10);
+  --md-accent-fg-color--transparent: #ffca4040;
   --md-accent-bg-color:            var(--brand-dark);
   --md-accent-bg-color--light:     rgba(45, 46, 53, 0.70);
 
@@ -168,6 +169,7 @@
 .md-search__form,
 .md-search__input,
 .md-search__output,
+.md-search__button,
 .md-search-result__meta,
 .md-tooltip,
 .md-nav__link {
@@ -271,19 +273,48 @@
   color: var(--brand-dark);
 }
 
-/* 7. "WIP panes": slight skew on background panels (experimental) ------------ */
-/* Skews the panel container, then counter-skews its direct children so the
- * text stays upright. Applied to callouts/admonitions only, to avoid breaking
- * code-block scrolling and tables. Tune or remove the `--sidexp-skew` angle. */
-:root {
-  --sidexp-skew: -1.4deg;
+.md-sidebar__scrollwrap {
+  overflow-y: visible;
 }
-.md-typeset .admonition,
-.md-typeset details {
+.md-nav__link--active {
+  position: relative;
+  z-index: 0;
+}
+.md-nav__link--active {
+  color: var(--brand-dark) !important;
+}
+.md-nav__link--active::before {
+  content: "";
+  position: absolute;
+  inset: 1px -4px;
+  background-color: var(--brand-amber);
   transform: skewX(var(--sidexp-skew));
-  box-shadow: var(--md-shadow-z2);
+  z-index: -1;
+  pointer-events: none;
 }
-.md-typeset .admonition > *,
-.md-typeset details > * {
-  transform: skewX(calc(-1 * var(--sidexp-skew)));
+.md-nav__link:not(.md-nav__link--active) {
+  position: relative;
+  z-index: 0;
+  transition: color .25s, background-color .25s, transform .25s;
+}
+.md-nav__link:not(.md-nav__link--active)::before {
+  content: "";
+  position: absolute;
+  inset: 1px -4px;
+  background-color: transparent;
+  transform: skewX(var(--sidexp-skew));
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color .25s, transform .25s;
+}
+.md-nav__link:not(.md-nav__link--active):hover,
+.md-nav__link:not(.md-nav__link--active):focus {
+  background-color: transparent !important;
+  transform: translate(2px, -3px);
+}
+/* Counter-translate so the background stays anchored while the label shifts. */
+.md-nav__link:not(.md-nav__link--active):hover::before,
+.md-nav__link:not(.md-nav__link--active):focus::before {
+  background-color: var(--md-accent-fg-color--transparent);
+  transform: translate(-2px, 3px) skewX(var(--sidexp-skew));
 }
