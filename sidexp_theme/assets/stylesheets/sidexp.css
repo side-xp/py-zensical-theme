@@ -273,9 +273,6 @@
   color: var(--brand-dark);
 }
 
-.md-sidebar__scrollwrap {
-  overflow-y: visible;
-}
 .md-nav__link--active {
   position: relative;
   z-index: 0;
@@ -288,7 +285,6 @@
   position: absolute;
   inset: 1px -4px;
   background-color: var(--brand-amber);
-  transform: skewX(var(--sidexp-skew));
   z-index: -1;
   pointer-events: none;
 }
@@ -302,7 +298,6 @@
   position: absolute;
   inset: 1px -4px;
   background-color: transparent;
-  transform: skewX(var(--sidexp-skew));
   z-index: -1;
   pointer-events: none;
   transition: background-color .25s, transform .25s;
@@ -310,11 +305,11 @@
 .md-nav__link:not(.md-nav__link--active):hover,
 .md-nav__link:not(.md-nav__link--active):focus {
   background-color: transparent !important;
-  transform: translate(2px, -3px);
+  transform: translate(4px, 0px);
 }
 /* Counter-translate so the background stays anchored while the label shifts. */
 .md-nav__link:not(.md-nav__link--active):hover::before,
 .md-nav__link:not(.md-nav__link--active):focus::before {
   background-color: var(--md-accent-fg-color--transparent);
-  transform: translate(-2px, 3px) skewX(var(--sidexp-skew));
+  transform: translate(-4px, 0px);
 }
