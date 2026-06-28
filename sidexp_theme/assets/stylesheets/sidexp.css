@@ -17,6 +17,15 @@
   --md-shadow-z1: 2px 2px 0 rgba(45, 46, 53, 0.20);
   --md-shadow-z2: 4px 4px 0 rgba(45, 46, 53, 0.24);
   --md-shadow-z3: 6px 6px 0 rgba(45, 46, 53, 0.28);
+
+  /* Header design — geometry is the same in both schemes (only the colors,
+   * which come from --md-primary-fg-color / --brand-*, differ), so these live
+   * here rather than in a scheme block. */
+  --sidexp-header-cut: 20px;    /* depth of the diagonal cut (right edge higher) */
+  --sidexp-hazard-h: 12px;      /* hazard band thickness */
+  --sidexp-hazard-w: 16px;      /* hazard stripe width */
+  --sidexp-hazard-angle: -45deg;
+  --sidexp-header-border: 2px;  /* thickness of the border (header background revealed below the band) */
 }
 
 /***** Light scheme *****/
@@ -161,13 +170,68 @@
   border-radius: 0 !important;
 }
 
-/* 6. Amber fill accents ----------------------------------------------------- */
-/* Amber works best as a fill, so it carries the brand here rather than as text. */
+.md-header {
+  position: relative;
+  background-color: transparent;
+  box-shadow: none;
+  /* Reserve space below the nav for the cut + band + border so content never
+   * overlaps. */
+  padding-bottom: calc(var(--sidexp-header-cut) + var(--sidexp-hazard-h) + var(--sidexp-header-border));
+}
 
-/* A thin amber rule under the header threads the brand through light mode
- * (where the header itself is dark). */
-[data-md-color-scheme="default"] .md-header {
-  border-bottom: 2px solid var(--brand-amber);
+/* Keep the header's own content above the painted background layers. */
+.md-header__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Diagonally-cut header background. */
+.md-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--md-primary-fg-color);
+  /* Fills down to the diagonal bottom edge. The strip of this background that
+   * the band doesn't cover (just above the bottom edge) is the "border". */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--sidexp-header-cut)),
+    0 100%
+  );
+}
+
+/* Caution-tape hazard band, hugging the diagonal cut. */
+.md-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--sidexp-header-cut) + var(--sidexp-hazard-h) + var(--sidexp-header-border));
+  background: repeating-linear-gradient(
+    var(--sidexp-hazard-angle),
+    var(--brand-amber) 0 var(--sidexp-hazard-w),
+    var(--brand-dark) var(--sidexp-hazard-w) calc(2 * var(--sidexp-hazard-w))
+  );
+  /* The band sits one border-thickness above the bottom edge, so the header
+   * background (::before) shows through the gap below it as the border. */
+  clip-path: polygon(
+    0 calc(100% - var(--sidexp-header-border) - var(--sidexp-hazard-h)),
+    100% calc(100% - var(--sidexp-header-border) - var(--sidexp-hazard-h) - var(--sidexp-header-cut)),
+    100% calc(100% - var(--sidexp-header-border) - var(--sidexp-header-cut)),
+    0 calc(100% - var(--sidexp-header-border))
+  );
+  pointer-events: none;
+}
+
+/* Header content (title, icons) sits on the colored header, so it uses the
+ * primary "bg" color: white on the dark light-mode header, dark on the amber
+ * dark-mode header (--md-primary-bg-color is set per scheme above). */
+.md-header,
+.md-header__title {
+  color: var(--md-primary-bg-color);
 }
 
 /* The one place red appears: the heading permalink ("¶") anchor icon, which
