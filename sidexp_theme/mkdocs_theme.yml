@@ -8,6 +8,15 @@
 # the full base theme and lets us override only what we need to brand it.
 extends: material
 
+
+# Brand typography. These two families are loaded by Zensical's font mechanism
+# and wired to `--md-text-font` (body) and `--md-code-font` (code). The display
+# font for headings (Chinese Rocks) is self-hosted via @font-face in sidexp.css,
+# since it isn't available from a font provider.
+font:
+  text: Lexend
+  code: IBM Plex Mono
+
 # Ship a light + dark palette by default. Both schemes opt into "custom"
 # colors so the brand stylesheet (sidexp.css) drives primary/accent, and each
 # carries a "toggle" so consumers get the light/dark switch button out of the

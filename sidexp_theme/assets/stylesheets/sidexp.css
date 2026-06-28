@@ -1,21 +1,209 @@
-/* ==========================================================================
- * Sideways Experiments brand colors for Zensical.
- *
- * These custom properties drive the theme's primary/accent colors. They take
- * effect because mkdocs_theme.yml sets `primary: custom` and `accent: custom`.
- * ========================================================================== */
-
-/* Light scheme (the default) -------------------------------------------------- */
-:root,
-[data-md-color-scheme="default"] {
-  --md-primary-fg-color:        #2d2e35;    /* header, links, primary accents   */
-  --md-primary-fg-color--light: #2d2e35;    /* lighter primary variant          */
-  --md-primary-fg-color--dark:  #e4002b;    /* darker primary variant           */
-  --md-accent-fg-color:         #2d2e35; /* hover / interactive accent       */
+@font-face {
+  font-family: "Chinese Rocks";
+  src: url("../fonts/Chinese Rocks.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* Dark scheme (slate) --------------------------------------------------------- */
+/* Hard, offset, blur-less shadows for a poster-like feel. Defined globally so
+ * both schemes share them. */
+:root {
+  --brand-white: #ffffff;
+  --brand-dark: #2d2e35;
+  --brand-amber: #ffca40;
+  --brand-red: #e4002b;
+
+  --md-shadow-z1: 2px 2px 0 rgba(45, 46, 53, 0.20);
+  --md-shadow-z2: 4px 4px 0 rgba(45, 46, 53, 0.24);
+  --md-shadow-z3: 6px 6px 0 rgba(45, 46, 53, 0.28);
+}
+
+/***** Light scheme *****/
+[data-md-color-scheme="default"] {
+  /* Foundation: dark text on white */
+  --md-default-fg-color:           var(--brand-dark);
+  --md-default-fg-color--light:    rgba(45, 46, 53, 0.62);
+  --md-default-fg-color--lighter:  rgba(45, 46, 53, 0.38);
+  --md-default-fg-color--lightest: rgba(45, 46, 53, 0.10);
+  --md-default-bg-color:           var(--brand-white);
+  --md-default-bg-color--light:    rgba(255, 255, 255, 0.70);
+  --md-default-bg-color--lighter:  rgba(255, 255, 255, 0.30);
+  --md-default-bg-color--lightest: rgba(255, 255, 255, 0.12);
+
+  /* Primary (header, active nav): dark fill, white text on top */
+  --md-primary-fg-color:           var(--brand-dark);
+  --md-primary-fg-color--light:    #4a4b54;
+  --md-primary-fg-color--dark:     #1f2024;
+  --md-primary-bg-color:           var(--brand-white);
+  --md-primary-bg-color--light:    rgba(255, 255, 255, 0.70);
+
+  /* Accent (hover/active/focus): deep amber/gold, readable on white */
+  --md-accent-fg-color:            #b07d00;
+  --md-accent-fg-color--transparent: rgba(176, 125, 0, 0.10);
+  --md-accent-bg-color:            var(--brand-white);
+  --md-accent-bg-color--light:     rgba(255, 255, 255, 0.70);
+
+  /* Content: links are dark + underlined (see §4), amber underline on hover. */
+  --md-typeset-a-color:            var(--brand-dark);
+  --md-typeset-mark-color:         rgba(255, 202, 64, 0.50);
+
+  /* Code: subtle brand-tinted surface, dark text */
+  --md-code-fg-color:              var(--brand-dark);
+  --md-code-bg-color:              rgba(45, 46, 53, 0.05);
+
+  /* Footer: dark band */
+  --md-footer-fg-color:            var(--brand-white);
+  --md-footer-fg-color--light:     rgba(255, 255, 255, 0.70);
+  --md-footer-fg-color--lighter:   rgba(255, 255, 255, 0.45);
+  --md-footer-bg-color:            var(--brand-dark);
+  --md-footer-bg-color--dark:      #1f2024;
+}
+
+/***** Dark scheme *****/
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:        #ffca40;
-  --md-accent-fg-color:         #ffca40;
+  /* Foundation: light text on brand dark */
+  --md-default-fg-color:           rgba(255, 255, 255, 0.92);
+  --md-default-fg-color--light:    rgba(255, 255, 255, 0.62);
+  --md-default-fg-color--lighter:  rgba(255, 255, 255, 0.38);
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.12);
+  --md-default-bg-color:           var(--brand-dark);
+  --md-default-bg-color--light:    rgba(45, 46, 53, 0.70);
+  --md-default-bg-color--lighter:  rgba(45, 46, 53, 0.30);
+  --md-default-bg-color--lightest: rgba(45, 46, 53, 0.12);
+
+  /* Primary (header): amber fill, dark text on top */
+  --md-primary-fg-color:           var(--brand-amber);
+  --md-primary-fg-color--light:    #ffd874;
+  --md-primary-fg-color--dark:     #e0a800;
+  --md-primary-bg-color:           var(--brand-dark);
+  --md-primary-bg-color--light:    rgba(45, 46, 53, 0.70);
+
+  /* Accent: amber, pops on dark */
+  --md-accent-fg-color:            var(--brand-amber);
+  --md-accent-fg-color--transparent: rgba(255, 202, 64, 0.10);
+  --md-accent-bg-color:            var(--brand-dark);
+  --md-accent-bg-color--light:     rgba(45, 46, 53, 0.70);
+
+  /* Content: on dark, amber reads well, so links are amber (hover -> red) */
+  --md-typeset-a-color:            var(--brand-amber);
+  --md-typeset-mark-color:         rgba(255, 202, 64, 0.40);
+
+  /* Code: a touch darker than the page for separation */
+  --md-code-fg-color:              rgba(255, 255, 255, 0.90);
+  --md-code-bg-color:              #25262c;
+
+  /* Footer */
+  --md-footer-fg-color:            var(--brand-white);
+  --md-footer-fg-color--light:     rgba(255, 255, 255, 0.70);
+  --md-footer-fg-color--lighter:   rgba(255, 255, 255, 0.45);
+  --md-footer-bg-color:            #25262c;
+  --md-footer-bg-color--dark:      #1f2024;
+}
+
+/* Body uses Lexend and code uses IBM Plex Mono (set via mkdocs_theme.yml).
+ * The page title (h1) and the header site title use the Chinese Rocks display
+ * font; all other headings stay on the body font. */
+.md-typeset h1,
+.md-header__title {
+  font-family: "Chinese Rocks", var(--md-text-font, "Lexend"), sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.01em;
+}
+
+.md-typeset h1 {
+  font-size: 2.6em;
+}
+.md-header__title {
+  font-size: 2.6em;
+}
+.md-header__topic:first-child {
+  font-weight: normal;
+}
+
+/* Content links: underlined so they're distinguishable without relying on a
+ * low-contrast color. On hover the underline pops amber while the text stays
+ * readable (dark in light mode; brightened in dark mode). */
+.md-typeset a:not(.headerlink) {
+  text-decoration: underline;
+  text-decoration-color: var(--md-default-fg-color--lighter);
+  text-underline-offset: 0.15em;
+}
+.md-typeset a:not(.headerlink):hover,
+.md-typeset a:not(.headerlink):focus {
+  text-decoration-color: var(--brand-amber);
+}
+[data-md-color-scheme="slate"] .md-typeset a:not(.headerlink):hover,
+[data-md-color-scheme="slate"] .md-typeset a:not(.headerlink):focus {
+  color: #ffd874;
+}
+
+/* Remove rounded corners from the common surfaced components. */
+.md-typeset code,
+.md-typeset pre > code,
+.md-typeset .highlight,
+.md-typeset .highlighttable,
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset blockquote,
+.md-typeset table:not([class]),
+.md-typeset .tabbed-set > .tabbed-labels,
+.md-typeset .tabbed-content,
+.md-typeset kbd,
+.md-typeset img,
+.md-button,
+.md-search__form,
+.md-search__input,
+.md-search__output,
+.md-search-result__meta,
+.md-tooltip,
+.md-nav__link {
+  border-radius: 0 !important;
+}
+
+/* 6. Amber fill accents ----------------------------------------------------- */
+/* Amber works best as a fill, so it carries the brand here rather than as text. */
+
+/* A thin amber rule under the header threads the brand through light mode
+ * (where the header itself is dark). */
+[data-md-color-scheme="default"] .md-header {
+  border-bottom: 2px solid var(--brand-amber);
+}
+
+/* The one place red appears: the heading permalink ("¶") anchor icon, which
+ * turns red when its heading is hovered or directly targeted. */
+.md-typeset .headerlink:hover,
+.md-typeset .headerlink:focus,
+.md-typeset :target > .headerlink {
+  color: var(--brand-red);
+}
+
+/* Primary buttons: amber background with dark text, in both schemes. */
+.md-typeset .md-button--primary {
+  background-color: var(--brand-amber);
+  border-color: var(--brand-amber);
+  color: var(--brand-dark);
+}
+.md-typeset .md-button--primary:hover,
+.md-typeset .md-button--primary:focus {
+  background-color: #ffd874;
+  border-color: #ffd874;
+  color: var(--brand-dark);
+}
+
+/* 7. "WIP panes": slight skew on background panels (experimental) ------------ */
+/* Skews the panel container, then counter-skews its direct children so the
+ * text stays upright. Applied to callouts/admonitions only, to avoid breaking
+ * code-block scrolling and tables. Tune or remove the `--sidexp-skew` angle. */
+:root {
+  --sidexp-skew: -1.4deg;
+}
+.md-typeset .admonition,
+.md-typeset details {
+  transform: skewX(var(--sidexp-skew));
+  box-shadow: var(--md-shadow-z2);
+}
+.md-typeset .admonition > *,
+.md-typeset details > * {
+  transform: skewX(calc(-1 * var(--sidexp-skew)));
 }
