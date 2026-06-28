@@ -8,6 +8,13 @@
 # the full base theme and lets us override only what we need to brand it.
 extends: material
 
+# Brand logo and favicon, shipped with the theme. These paths point at assets
+# bundled in this package (under assets/images/); both are resolved to a
+# site-root URL at build time, so they work without the consumer placing any
+# file in their own docs/. A consumer can override either by setting their own
+# `logo` / `favicon` (relative to their docs_dir) in their zensical.toml.
+logo: assets/images/logo.png
+favicon: assets/images/favicon.ico
 
 # Brand typography. These two families are loaded by Zensical's font mechanism
 # and wired to `--md-text-font` (body) and `--md-code-font` (code). The display
