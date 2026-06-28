@@ -8,9 +8,20 @@
 # the full base theme and lets us override only what we need to brand it.
 extends: material
 
-# Opt the palette into custom colors so the brand stylesheet (added in a later
-# step) drives the primary/accent colors out of the box.
+# Ship a light + dark palette by default. Both schemes opt into "custom"
+# colors so the brand stylesheet (sidexp.css) drives primary/accent, and each
+# carries a "toggle" so consumers get the light/dark switch button out of the
+# box. A consumer that defines its own "palette" replaces this entirely.
 palette:
   - scheme: default
     primary: custom
     accent: custom
+    toggle:
+      icon: lucide/sun
+      name: Switch to dark mode
+  - scheme: slate
+    primary: custom
+    accent: custom
+    toggle:
+      icon: lucide/moon
+      name: Switch to light mode
