@@ -122,7 +122,7 @@ A bundled stylesheet still has to be linked into the page. Zensical uses [MiniJi
 Two details matter here:
 
 - **`{% extends "base.html" %}`** builds on the base theme instead of replacing it.
-- **`{{ super() }}`** keeps the base theme's own `<style>`/`<link>` tags, so your stylesheet is added *after* them. Because it loads last, your variables win — without you having to redefine everything the base theme already provides.
+- **`{{ super() }}`** keeps the base theme's own `<style>`/`<link>` tags, so your stylesheet is added *after* them. Because it loads last, your variables win, without you having to redefine everything the base theme already provides.
 
 > ✅ **Checkpoint:** Your theme now carries its colors with it. Any site that installs the theme and sets `name = "your-theme"` gets the branding automatically, with no extra CSS on their side. We will confirm the stylesheet actually ships in the built site during the verification step.
 
@@ -139,7 +139,7 @@ In the site's `zensical.toml`, set the theme name to your entry-point key:
 name = "your-theme"
 ```
 
-The name only resolves once the theme package is installed in the same environment (`pip install -e .`), which we set up in the next step — so the site won't build until then.
+The name only resolves once the theme package is installed in the same environment (`pip install -e .`), which we set up in the next step, so the site won't build until then.
 
 ### 3.2 Activate the custom palette
 
@@ -167,7 +167,7 @@ toggle.name = "Switch to light mode"
 > Error: Theme 'your-theme' is not installed. Available themes are:
 > ```
 >
-> That is expected — Step 4 sets up the install that makes the theme resolvable.
+> That is expected: Step 4 sets up the install that makes the theme resolvable.
 
 ## Step 4: Install the theme for local development
 
@@ -188,7 +188,7 @@ This does two things at once:
 
 ### Housekeeping: ignore build artifacts
 
-Working with a Python package produces throwaway files — bytecode caches and packaging build directories. Add them to `.gitignore` so they never get committed:
+Working with a Python package produces throwaway files (bytecode caches and packaging build directories). Add them to `.gitignore` so they never get committed:
 
 ```gitignore
 # Python bytecode caches
@@ -202,3 +202,70 @@ __pycache__/
 ```
 
 > ✅ **Checkpoint:** `zensical serve` now starts the demo site with your theme and live reload at <http://localhost:8000>, and `zensical build` produces a branded `site/`. The "Theme is not installed" error from the previous step is gone.
+
+## Step 5: Document how others install it
+
+A theme is only reusable if people know how to consume it. The same `pip install` + one config line that you use locally is all anyone else needs, so document it in your `README.md`.
+
+### 5.1 Install from GitHub
+
+If you publish to [PyPI](https://pypi.org), consumers can `pip install your-zensical-theme`. If you don't (or the repo is private), install straight from Git, pinning to a release tag for reproducible builds:
+
+```bash
+pip install git+https://github.com/your-org/your-zensical-theme@v0.1.0
+```
+
+### 5.2 Enable it
+
+```toml
+[project.theme]
+name = "your-theme"
+```
+
+Because the theme declares `zensical` as a dependency, `pip` installs Zensical automatically: consumers don't list it separately.
+
+### 5.3 Use it in CI
+
+The same two commands drop straight into a pipeline. For GitHub Actions:
+
+```yaml
+- name: Install dependencies
+  run: pip install git+https://github.com/your-org/your-zensical-theme@v0.1.0
+
+- name: Build documentation
+  run: zensical build
+```
+
+> 💡 Tag your releases as `vX.Y.Z` and have consumers pin to a tag. They opt into new versions deliberately, and your theme can evolve without breaking their builds unexpectedly.
+
+> ✅ **Checkpoint:** Anyone (including a CI runner) can now turn their Markdown into a branded site with one install and one line of config.
+
+## Step 6: Verify the whole thing works
+
+Before you tag a release, confirm the theme installs, builds, and — most importantly — that your bundled stylesheet actually reaches the output. A packaged theme's `assets/` are copied into the built site automatically, but it's worth proving rather than assuming.
+
+From the repository root, with the virtual environment activated:
+
+```bash
+# 1. Install (or reinstall) the theme.
+python -m pip install -e .
+
+# 2. Confirm the theme is registered under the entry point.
+python -c "from importlib.metadata import entry_points; print([e.name for e in entry_points(group='mkdocs.themes')])"
+#   -> ['your-theme']
+
+# 3. Build the demo site.
+zensical build
+
+# 4. Confirm your stylesheet shipped and is linked from the pages.
+ls site/assets/stylesheets/                 # your-theme.css should be here
+grep -r "your-theme.css" site/*.html        # pages should link it
+```
+
+If step 4 shows your CSS file in `site/assets/stylesheets/` and the HTML references it, the theme is delivering its branding end to end. Finally, run `zensical serve` and open <http://localhost:8000> to see your colors live.
+
+> 💡 **If the stylesheet does *not* appear** in the output, your Zensical version may not copy theme `assets/` automatically. As a fallback, declare it as default `extra_css` in `mkdocs_theme.yml`, or document a one-line `extra_css` entry for consumers to add. The template-and-palette inheritance still works regardless.
+
+---
+
+That's the whole journey: a `zensical new` site became an installable, brandable theme that anyone can pull into their own documentation with a single line of config. From here you can add a logo and favicon, override header/footer partials, and automate releases — but the foundation is done.
