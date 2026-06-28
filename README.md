@@ -1,6 +1,6 @@
 # SideXP Zensical Theme
 
-This is a custom Zensical theme, used to generate documentation websites from MarkDown files using Sideways Experiments styles.
+This is a custom Zensical theme, used to generate documentation websites from Markdown files using Sideways Experiments styles.
 
 ## Using this theme
 
