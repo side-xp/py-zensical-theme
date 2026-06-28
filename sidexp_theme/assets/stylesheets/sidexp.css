@@ -1,21 +1,320 @@
-/* ==========================================================================
- * Sideways Experiments brand colors for Zensical.
- *
- * These custom properties drive the theme's primary/accent colors. They take
- * effect because mkdocs_theme.yml sets `primary: custom` and `accent: custom`.
- * ========================================================================== */
-
-/* Light scheme (the default) -------------------------------------------------- */
-:root,
-[data-md-color-scheme="default"] {
-  --md-primary-fg-color:        #2d2e35;    /* header, links, primary accents   */
-  --md-primary-fg-color--light: #2d2e35;    /* lighter primary variant          */
-  --md-primary-fg-color--dark:  #e4002b;    /* darker primary variant           */
-  --md-accent-fg-color:         #2d2e35; /* hover / interactive accent       */
+@font-face {
+  font-family: "Chinese Rocks";
+  src: url("../fonts/Chinese Rocks.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* Dark scheme (slate) --------------------------------------------------------- */
+/* Hard, offset, blur-less shadows for a poster-like feel. Defined globally so
+ * both schemes share them. */
+:root {
+  --brand-white: #ffffff;
+  --brand-dark: #2d2e35;
+  --brand-amber: #ffca40;
+  --brand-red: #e4002b;
+
+  --md-shadow-z1: 2px 2px 0 rgba(45, 46, 53, 0.20);
+  --md-shadow-z2: 4px 4px 0 rgba(45, 46, 53, 0.24);
+  --md-shadow-z3: 6px 6px 0 rgba(45, 46, 53, 0.28);
+
+  /* Header design */
+  --sidexp-header-cut: 32px;    /* depth of the diagonal cut (right edge higher) */
+  --sidexp-hazard-h: 12px;      /* hazard band thickness */
+  --sidexp-hazard-w: 16px;      /* hazard stripe width */
+  --sidexp-hazard-angle: -45deg;
+  --sidexp-header-border: 2px;  /* thickness of the border (header background revealed below the band) */
+
+  /* SideXP design */
+  --sidexp-skew: -20deg;
+}
+
+/***** Light scheme *****/
+[data-md-color-scheme="default"] {
+  /* Foundation: dark text on white */
+  --md-default-fg-color:           var(--brand-dark);
+  --md-default-fg-color--light:    rgba(45, 46, 53, 0.62);
+  --md-default-fg-color--lighter:  rgba(45, 46, 53, 0.38);
+  --md-default-fg-color--lightest: rgba(45, 46, 53, 0.10);
+  --md-default-bg-color:           var(--brand-white);
+  --md-default-bg-color--light:    rgba(255, 255, 255, 0.70);
+  --md-default-bg-color--lighter:  rgba(255, 255, 255, 0.30);
+  --md-default-bg-color--lightest: rgba(255, 255, 255, 0.12);
+
+  /* Primary (header, active nav): dark fill, white text on top */
+  --md-primary-fg-color:           var(--brand-dark);
+  --md-primary-fg-color--light:    #4a4b54;
+  --md-primary-fg-color--dark:     #1f2024;
+  --md-primary-bg-color:           var(--brand-white);
+  --md-primary-bg-color--light:    rgba(255, 255, 255, 0.70);
+
+  /* Accent (hover/active/focus): deep amber/gold, readable on white */
+  --md-accent-fg-color:            #977726;
+  --md-accent-fg-color--transparent: #ffca4040;
+  --md-accent-bg-color:            var(--brand-white);
+  --md-accent-bg-color--light:     rgba(255, 255, 255, 0.70);
+
+  /* Content: links are dark + underlined (see §4), amber underline on hover. */
+  --md-typeset-a-color:            var(--brand-dark);
+  --md-typeset-mark-color:         #ffca40;
+
+  /* Code: subtle brand-tinted surface, dark text */
+  --md-code-fg-color:              var(--brand-dark);
+  --md-code-bg-color:              rgba(45, 46, 53, 0.05);
+
+  /* Footer: dark band */
+  --md-footer-fg-color:            var(--brand-white);
+  --md-footer-fg-color--light:     rgba(255, 255, 255, 0.70);
+  --md-footer-fg-color--lighter:   rgba(255, 255, 255, 0.45);
+  --md-footer-bg-color:            var(--brand-dark);
+  --md-footer-bg-color--dark:      #1f2024;
+}
+
+/***** Dark scheme *****/
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:        #ffca40;
-  --md-accent-fg-color:         #ffca40;
+  /* Foundation: light text on brand dark */
+  --md-default-fg-color:           rgba(255, 255, 255, 0.92);
+  --md-default-fg-color--light:    rgba(255, 255, 255, 0.62);
+  --md-default-fg-color--lighter:  rgba(255, 255, 255, 0.38);
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.12);
+  --md-default-bg-color:           var(--brand-dark);
+  --md-default-bg-color--light:    rgba(45, 46, 53, 0.70);
+  --md-default-bg-color--lighter:  rgba(45, 46, 53, 0.30);
+  --md-default-bg-color--lightest: rgba(45, 46, 53, 0.12);
+
+  /* Primary (header): amber fill, dark text on top */
+  --md-primary-fg-color:           var(--brand-amber);
+  --md-primary-fg-color--light:    #ffd874;
+  --md-primary-fg-color--dark:     #e0a800;
+  --md-primary-bg-color:           var(--brand-dark);
+  --md-primary-bg-color--light:    rgba(45, 46, 53, 0.70);
+
+  /* Accent: amber, pops on dark */
+  --md-accent-fg-color:            var(--brand-amber);
+  --md-accent-fg-color--transparent: #ffca4040;
+  --md-accent-bg-color:            var(--brand-dark);
+  --md-accent-bg-color--light:     rgba(45, 46, 53, 0.70);
+
+  /* Content: on dark, amber reads well, so links are amber (hover -> red) */
+  --md-typeset-a-color:            var(--brand-amber);
+  --md-typeset-mark-color:         rgba(255, 202, 64, 0.40);
+
+  /* Code: a touch darker than the page for separation */
+  --md-code-fg-color:              rgba(255, 255, 255, 0.90);
+  --md-code-bg-color:              #25262c;
+
+  /* Footer */
+  --md-footer-fg-color:            var(--brand-white);
+  --md-footer-fg-color--light:     rgba(255, 255, 255, 0.70);
+  --md-footer-fg-color--lighter:   rgba(255, 255, 255, 0.45);
+  --md-footer-bg-color:            #25262c;
+  --md-footer-bg-color--dark:      #1f2024;
+}
+
+/* Body uses Lexend and code uses IBM Plex Mono (set via mkdocs_theme.yml).
+ * The page title (h1) and the header site title use the Chinese Rocks display
+ * font; all other headings stay on the body font. */
+.md-typeset h1,
+.md-header__title {
+  font-family: "Chinese Rocks", var(--md-text-font, "Lexend"), sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.01em;
+}
+
+.md-typeset h1 {
+  font-size: 2.6em;
+}
+.md-header__title {
+  font-size: 2.6em;
+  color: var(--brand-white);
+}
+[data-md-color-scheme="slate"] .md-header__title {
+  color: var(--brand-dark);
+}
+.md-header__topic:first-child {
+  font-weight: normal;
+}
+
+/* Content links: underlined so they're distinguishable without relying on a
+ * low-contrast color. On hover the underline pops amber while the text stays
+ * readable (dark in light mode; brightened in dark mode). */
+.md-typeset a:not(.headerlink) {
+  text-decoration: underline;
+  text-decoration-color: var(--md-default-fg-color--lighter);
+  text-underline-offset: 0.15em;
+}
+.md-typeset a:not(.headerlink):hover,
+.md-typeset a:not(.headerlink):focus {
+  text-decoration-color: var(--brand-amber);
+}
+[data-md-color-scheme="slate"] .md-typeset a:not(.headerlink):hover,
+[data-md-color-scheme="slate"] .md-typeset a:not(.headerlink):focus {
+  color: #ffd874;
+}
+
+/* Remove rounded corners from the common surfaced components. */
+.md-typeset code,
+.md-typeset pre > code,
+.md-typeset .highlight,
+.md-typeset .highlighttable,
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset blockquote,
+.md-typeset table:not([class]),
+.md-typeset .tabbed-set > .tabbed-labels,
+.md-typeset .tabbed-content,
+.md-typeset kbd,
+.md-typeset img,
+.md-button,
+.md-search__form,
+.md-search__input,
+.md-search__output,
+.md-search__button,
+.md-search-result__meta,
+.md-tooltip,
+.md-nav__link {
+  border-radius: 0 !important;
+}
+
+.md-header {
+  position: relative;
+  background-color: transparent;
+  box-shadow: none;
+  /* Reserve space below the nav for the cut + band + border so content never
+   * overlaps. */
+  padding-bottom: calc(var(--sidexp-header-cut) + var(--sidexp-hazard-h) + var(--sidexp-header-border));
+}
+
+/* Keep the header's own content above the painted background layers. */
+.md-header__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Diagonally-cut header background. */
+.md-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--md-primary-fg-color);
+  /* Fills down to the diagonal bottom edge. The strip of this background that
+   * the band doesn't cover (just above the bottom edge) is the "border". */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--sidexp-header-cut)),
+    0 100%
+  );
+}
+
+/* Caution-tape hazard band, hugging the diagonal cut. */
+.md-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--sidexp-header-cut) + var(--sidexp-hazard-h) + var(--sidexp-header-border));
+  background: repeating-linear-gradient(
+    var(--sidexp-hazard-angle),
+    var(--brand-amber) 0 var(--sidexp-hazard-w),
+    var(--brand-dark) var(--sidexp-hazard-w) calc(2 * var(--sidexp-hazard-w))
+  );
+  /* The band sits one border-thickness above the bottom edge, so the header
+   * background (::before) shows through the gap below it as the border. */
+  clip-path: polygon(
+    0 calc(100% - var(--sidexp-header-border) - var(--sidexp-hazard-h)),
+    100% calc(100% - var(--sidexp-header-border) - var(--sidexp-hazard-h) - var(--sidexp-header-cut)),
+    100% calc(100% - var(--sidexp-header-border) - var(--sidexp-header-cut)),
+    0 calc(100% - var(--sidexp-header-border))
+  );
+  pointer-events: none;
+}
+
+.md-header button {
+  background: color-mix(in srgb, var(--brand-white) 40%, transparent);
+}
+.md-header button:hover {
+  background: color-mix(in srgb, var(--brand-white) 70%, transparent);
+}
+.md-header .md-icon {
+  color: var(--brand-white)
+}
+
+[data-md-color-scheme="slate"] .md-header button {
+  background: color-mix(in srgb, var(--brand-dark) 40%, transparent);
+}
+[data-md-color-scheme="slate"] .md-header button:hover {
+  background: color-mix(in srgb, var(--brand-dark) 70%, transparent);
+}
+[data-md-color-scheme="slate"] .md-header .md-icon {
+  color: var(--brand-dark)
+}
+
+/* The one place red appears: the heading permalink ("¶") anchor icon, which
+ * turns red when its heading is hovered or directly targeted. */
+.md-typeset .headerlink:hover,
+.md-typeset .headerlink:focus,
+.md-typeset :target > .headerlink {
+  color: var(--brand-red);
+}
+
+/* Primary buttons: amber background with dark text, in both schemes. */
+.md-typeset .md-button--primary {
+  background-color: var(--brand-amber);
+  border-color: var(--brand-amber);
+  color: var(--brand-dark);
+}
+.md-typeset .md-button--primary:hover,
+.md-typeset .md-button--primary:focus {
+  background-color: #ffd874;
+  border-color: #ffd874;
+  color: var(--brand-dark);
+}
+
+.md-sidebar__scrollwrap {
+  overflow-y: visible;
+}
+.md-nav__link--active {
+  position: relative;
+  z-index: 0;
+}
+.md-nav__link--active {
+  color: var(--brand-dark) !important;
+}
+.md-nav__link--active::before {
+  content: "";
+  position: absolute;
+  inset: 1px -4px;
+  background-color: var(--brand-amber);
+  transform: skewX(var(--sidexp-skew));
+  z-index: -1;
+  pointer-events: none;
+}
+.md-nav__link:not(.md-nav__link--active) {
+  position: relative;
+  z-index: 0;
+  transition: color .25s, background-color .25s, transform .25s;
+}
+.md-nav__link:not(.md-nav__link--active)::before {
+  content: "";
+  position: absolute;
+  inset: 1px -4px;
+  background-color: transparent;
+  transform: skewX(var(--sidexp-skew));
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color .25s, transform .25s;
+}
+.md-nav__link:not(.md-nav__link--active):hover,
+.md-nav__link:not(.md-nav__link--active):focus {
+  background-color: transparent !important;
+  transform: translate(2px, -3px);
+}
+/* Counter-translate so the background stays anchored while the label shifts. */
+.md-nav__link:not(.md-nav__link--active):hover::before,
+.md-nav__link:not(.md-nav__link--active):focus::before {
+  background-color: var(--md-accent-fg-color--transparent);
+  transform: translate(-2px, 3px) skewX(var(--sidexp-skew));
 }

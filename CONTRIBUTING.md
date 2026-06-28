@@ -149,9 +149,9 @@ As mentioned in the [*Suggesting enhancements or features*](https://github.com/s
 
 ## Releases
 
-Releases are generated based on `vX.Y.Z` tags pushed to the repository.
+Releases are automated with [release-please](https://github.com/googleapis/release-please). As [Conventional Commits](https://www.conventionalcommits.org) land on `main`, it maintains a "release" pull request that bumps the version in `pyproject.toml` and updates `CHANGELOG.md`. Merging that pull request creates the `vX.Y.Z` tag, publishes a GitHub Release, and attaches the compiled package (wheel + sdist) along with a snapshot of the showcase site.
 
-Each release will include a compiled package and changelog.
+The version increment is derived from your commit messages, so following the Conventional Commits format matters: `fix:` triggers a patch release, `feat:` a minor one, and a `feat!:` (or a `BREAKING CHANGE:` footer) a major one.
 
 We currently do **not** require contributors to handle release generation (this is done internally).
 
