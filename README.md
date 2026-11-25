@@ -11,7 +11,7 @@ This theme is distributed as an installable Python package. Any [Zensical](https
 Install it straight from GitHub, pinning to a released version tag:
 
 ```bash
-pip install git+https://github.com/side-xp/py-zensical-theme@v1.0.1
+pip install git+https://github.com/side-xp/py-zensical-theme@v1.1.0
 ```
 
 > Pinning to a `vX.Y.Z` tag keeps your builds reproducible. Drop the suffix (from the `@` onwards) to track the latest `main`.

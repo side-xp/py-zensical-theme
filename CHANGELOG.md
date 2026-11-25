@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v1.1.0 (2026-11-25)
+
+### Bug Fixes
+
+- Fixed Discord invitation
+  ([`5d1f66b`](https://github.com/side-xp/py-zensical-theme/commit/5d1f66b7b991e1bdb11f7a442cabe61f3e8d4897))
+
+### Continuous Integration
+
+- Switched to `python-semantic-release`
+  ([`97f2f3c`](https://github.com/side-xp/py-zensical-theme/commit/97f2f3c43a92c4af1bba3b0874514c752f1aeb6a))
+
+### Features
+
+- Migrate to Zensical 0.1.3
+  ([`82d49cd`](https://github.com/side-xp/py-zensical-theme/commit/82d49cd333ff384d05b17839eecfe210978d7dc2))
+
+
 ## [1.0.1](https://github.com/side-xp/py-zensical-theme/compare/v1.0.0...v1.0.1) (2026-06-28)
 
 
