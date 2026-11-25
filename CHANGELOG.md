@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v1.1.1 (2026-11-25)
+
+### Bug Fixes
+
+- Fixed header labels in responsive mode
+  ([`b80a1cc`](https://github.com/side-xp/py-zensical-theme/commit/b80a1cc10ad098b0665a10e0a56a7971d6656d2b))
+
+- Fixed text color in header
+  ([`aa2b39a`](https://github.com/side-xp/py-zensical-theme/commit/aa2b39af082fcac5cfac06d6a6bd8797e7147b6a))
+
+
 ## v1.1.0 (2026-11-25)
 
 ### Bug Fixes
