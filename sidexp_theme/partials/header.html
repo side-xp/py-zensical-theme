@@ -1,9 +1,15 @@
 {#-
   Header partial for the "side-xp" theme. This is a copy of Zensical's default
-  header with ONE change: the title is static and never swaps to the page title
-  on scroll.
+  header with 2 changes:
 
-  How: the default header tags the title with `data-md-component="header-title"`
+  1. The menu and search buttons are named with `aria-label` instead of
+     upstream's `<span class="md-visually-hidden">` text, so no label text is
+     ever rendered under the icons (whatever the CSS does with that class),
+     while screen readers still announce the buttons.
+  2. The title is static and never swaps to the page title on scroll (details
+     below).
+
+  How the static title works: the default header tags the title with `data-md-component="header-title"`
   and a second `header-topic` holding the page title; Zensical's JS observes the
   page H1 and toggles `.md-header__title--active` to swap between them. By
   dropping that hook and the second topic, the JS observer never mounts, so the
@@ -12,7 +18,7 @@
   NOTE: this mirrors the upstream partial, last synced from zensical-ui 0.0.43
   (the package Zensical depends on for its templates). If Zensical changes its
   header, re-sync this file from zensical_ui/templates/partials/header.html and
-  re-apply the change.
+  re-apply both changes.
 -#}
 {% set class = "md-header" %}
 {% if "navigation.tabs.sticky" in features %}
@@ -25,10 +31,9 @@
     <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
-    <label class="md-header__button md-icon" for="__drawer">
+    <label class="md-header__button md-icon" for="__drawer" aria-label="{{ lang.t('nav') }}">
       {% set icon = config.theme.icon.menu or "material/menu" %}
       {% include ".icons/" ~ icon ~ ".svg" %}
-      <span class="md-visually-hidden">{{ lang.t('nav') }}</span>
     </label>
     
     <div class="md-header__title">
@@ -55,10 +60,9 @@
     {% if "search" in config.plugins %}
       {% set search = config.plugins["search"] | attr("config") %}
       {% if search.enabled %}
-        <label class="md-header__button md-icon" for="__search">
+        <label class="md-header__button md-icon" for="__search" aria-label="{{ lang.t('search') }}">
           {% set icon = config.theme.icon.search or "material/magnify" %}
           {% include ".icons/" ~ icon ~ ".svg" %}
-          <span class="md-visually-hidden">{{ lang.t('search') }}</span>
         </label>
         {% include "partials/search.html" %}
       {% endif %}

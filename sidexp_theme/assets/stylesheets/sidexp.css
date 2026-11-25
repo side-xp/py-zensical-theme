@@ -173,6 +173,10 @@
   position: relative;
   background-color: transparent;
   box-shadow: none;
+  /* Upstream colors header text like page text, since its header is light and translucent. Ours is painted with the
+   * primary color (see ::before), so any header text without its own color (e.g. the repository name and facts) must
+   * use the "text on primary" color instead to stay readable in both schemes. */
+  color: var(--md-primary-bg-color);
   /* Reserve space below the nav for the cut + band + border so content never
    * overlaps. */
   padding-bottom: calc(var(--sidexp-header-cut) + var(--sidexp-hazard-h) + var(--sidexp-header-border));
