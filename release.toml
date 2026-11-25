@@ -1,0 +1,8 @@
+# python-semantic-release configuration, used by the `release` job of workflows/release.yml.
+
+[semantic_release]
+# The package version Python tooling reads, so the main one to bump.
+version_toml = ["pyproject.toml:project.version"]
+# The README install command pins a release tag (`py-zensical-theme@<tag>`). The "tf" stamp writes the full tag (tag
+# format included), not the bare version number, so that command keeps pointing at the latest release.
+version_variables = ["README.md:py-zensical-theme:tf"]

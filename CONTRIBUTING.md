@@ -105,10 +105,10 @@ There are many ways to be involved in our open source projects, and there's abso
 
 So what can you do to help?
 
-- **Discuss with the community**: join our [Discord server](https://discord.gg/bMK2d47JaE), and start chatting with the community or the core team
+- **Discuss with the community**: join our [Discord server](https://discord.gg/G49RUZ9F2N), and start chatting with the community or the core team
 - **Report bugs**: found a bug when using one of our packages? You can report it in the *Issues* tab on GitHub
-- **Suggest improvements**: whether from the [Discord server](https://discord.gg/bMK2d47JaE) or by creating an *Issue*, feel free to talk about your needs or current usage of our solutions, highlight what's missing or what could be better
-- **Request new features**: again, you can use the [Discord server](https://discord.gg/bMK2d47JaE) or create a new *Issue* to ask for something new, see if others may need it too, so we can consider modifying an existing package or even start a new project just for it
+- **Suggest improvements**: whether from the [Discord server](https://discord.gg/G49RUZ9F2N) or by creating an *Issue*, feel free to talk about your needs or current usage of our solutions, highlight what's missing or what could be better
+- **Request new features**: again, you can use the [Discord server](https://discord.gg/G49RUZ9F2N) or create a new *Issue* to ask for something new, see if others may need it too, so we can consider modifying an existing package or even start a new project just for it
 - **Address issues**: you can contribute directly to the codebase by resolving an issue, creating the required assets, or just implementing changes and create a Pull Request on *GitHub*
 
 > By the way, we love to know how you use our tools, so we can make them better!
@@ -149,9 +149,11 @@ As mentioned in the [*Suggesting enhancements or features*](https://github.com/s
 
 ## Releases
 
-Releases are automated with [release-please](https://github.com/googleapis/release-please). As [Conventional Commits](https://www.conventionalcommits.org) land on `main`, it maintains a "release" pull request that bumps the version in `pyproject.toml` and updates `CHANGELOG.md`. Merging that pull request creates the `vX.Y.Z` tag, publishes a GitHub Release, and attaches the compiled package (wheel + sdist) along with a snapshot of the showcase site.
+Releases are fully automated with [python-semantic-release](https://python-semantic-release.readthedocs.io), configured in `release.toml`. On every push to `main`, it reads the [Conventional Commits](https://www.conventionalcommits.org) made since the last release. If they call for a new version, it bumps the version in `pyproject.toml` and in the README install command, updates `CHANGELOG.md`, commits and tags the result as `vX.Y.Z`, and publishes a GitHub Release. The compiled package (wheel + sdist) and a snapshot of the showcase site are attached to that release. Nothing needs to be approved by hand.
 
-The version increment is derived from your commit messages, so following the Conventional Commits format matters: `fix:` triggers a patch release, `feat:` a minor one, and a `feat!:` (or a `BREAKING CHANGE:` footer) a major one.
+The version increment is derived from your commit messages, so following the Conventional Commits format matters: `fix:` (or `perf:`) triggers a patch release, `feat:` a minor one, and a `feat!:` (or a `BREAKING CHANGE:` footer) a major one. Other types, such as `docs:` or `chore:`, don't trigger a release on their own.
+
+> Note: the release commit is pushed to `main` only, so merge `main` back into `develop` after a release to keep both branches in sync.
 
 We currently do **not** require contributors to handle release generation (this is done internally).
 
@@ -167,7 +169,7 @@ We will evaluate whether a Contributor License Agreement (CLA) is required in th
 
 This project is maintained by the team at *Sideways Experiments*.
 
-If you're unsure about any part of the contribution process, feel free to open a discussion on our [Discord server](https://discord.gg/bMK2d47JaE), or by sending an email directly to [contact@sideways-experiments.com](mailto:contact@sideways-experiments.com).
+If you're unsure about any part of the contribution process, feel free to open a discussion on our [Discord server](https://discord.gg/G49RUZ9F2N), or by sending an email directly to [contact@sideways-experiments.com](mailto:contact@sideways-experiments.com).
 
 ---
 

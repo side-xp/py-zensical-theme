@@ -24,9 +24,6 @@
   --sidexp-hazard-w: 16px;      /* hazard stripe width */
   --sidexp-hazard-angle: -45deg;
   --sidexp-header-border: 2px;  /* thickness of the border (header background revealed below the band) */
-
-  /* SideXP design */
-  --sidexp-skew: -20deg;
 }
 
 /***** Light scheme *****/
@@ -166,11 +163,7 @@
 .md-typeset kbd,
 .md-typeset img,
 .md-button,
-.md-search__form,
-.md-search__input,
-.md-search__output,
 .md-search__button,
-.md-search-result__meta,
 .md-tooltip,
 .md-nav__link {
   border-radius: 0 !important;

@@ -11,10 +11,10 @@ This theme is distributed as an installable Python package. Any [Zensical](https
 Install it straight from GitHub, pinning to a released version tag:
 
 ```bash
-pip install git+https://github.com/side-xp/py-zensical-theme@v0.1.0
+pip install git+https://github.com/side-xp/py-zensical-theme@v1.0.1
 ```
 
-> Pinning to a `vX.Y.Z` tag keeps your builds reproducible. Drop the `@v0.1.0` suffix to track the latest `main`.
+> Pinning to a `vX.Y.Z` tag keeps your builds reproducible. Drop the suffix (from the `@` onwards) to track the latest `main`.
 
 ### 2. Enable it in your `zensical.toml`
 
@@ -44,6 +44,8 @@ In CI, install the theme alongside your other dependencies before building. For 
 ```
 
 `pip` resolves Zensical itself automatically, since it is declared as a dependency of the theme.
+
+> The theme only allows the Zensical versions it has been tested with. If your project also pins `zensical`, keep it within the range declared in the theme's [pyproject.toml](./pyproject.toml), or `pip` will report a conflict.
 
 ## Contributing
 

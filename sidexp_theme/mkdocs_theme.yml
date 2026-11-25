@@ -24,20 +24,33 @@ font:
   text: Lexend
   code: IBM Plex Mono
 
-# Ship a light + dark palette by default. Both schemes opt into "custom"
-# colors so the brand stylesheet (sidexp.css) drives primary/accent, and each
-# carries a "toggle" so consumers get the light/dark switch button out of the
-# box. A consumer that defines its own "palette" replaces this entirely.
+# Ship a 3-state palette by default (system preference, light, dark), matching
+# Zensical's own starter config. The toggle button cycles through the entries
+# in order. Every entry opts into "custom" colors so the brand stylesheet
+# (sidexp.css) drives primary/accent. This includes the system entry: it is the
+# first one, so Zensical uses it for a first visit, and otherwise its colors
+# would fall back to the upstream default. A consumer that defines its own
+# "palette" replaces this entirely.
 palette:
-  - scheme: default
+  # Follows the OS setting: Zensical's script picks the light or dark entry
+  # below by matching their "media" queries.
+  - media: "(prefers-color-scheme)"
+    primary: custom
+    accent: custom
+    toggle:
+      icon: lucide/sun-moon
+      name: Switch to light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
     primary: custom
     accent: custom
     toggle:
       icon: lucide/sun
       name: Switch to dark mode
-  - scheme: slate
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
     primary: custom
     accent: custom
     toggle:
       icon: lucide/moon
-      name: Switch to light mode
+      name: Switch to system preference

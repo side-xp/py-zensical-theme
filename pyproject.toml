@@ -10,7 +10,9 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.14"
 authors = [{ name = "Hubert Grossin", email = "contact@sideways-experiments.com" }]
-dependencies = ["zensical"]
+# Zensical is still pre-1.0, so minor releases may break the templates this theme overrides. The upper bound keeps
+# consumers on a tested range; raise it only after checking the theme against the next minor release.
+dependencies = ["zensical>=0.1.3,<0.2"]
 
 [project.urls]
 Repository = "https://github.com/side-xp/py-zensical-theme"
