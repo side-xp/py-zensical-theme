@@ -10,13 +10,11 @@ This theme is distributed as an installable Python package. Any [Zensical](https
 
 Install it straight from GitHub, pinning to a released version tag:
 
-<!-- x-release-please-start-version -->
 ```bash
-pip install git+https://github.com/side-xp/py-zensical-theme@sidexp-zensical-theme-v1.0.1
+pip install git+https://github.com/side-xp/py-zensical-theme@v1.0.1
 ```
-<!-- x-release-please-end -->
 
-> Pinning to a `sidexp-zensical-theme-vX.Y.Z` tag keeps your builds reproducible. Drop the suffix (from the `@` onwards) to track the latest `main`.
+> Pinning to a `vX.Y.Z` tag keeps your builds reproducible. Drop the suffix (from the `@` onwards) to track the latest `main`.
 
 ### 2. Enable it in your `zensical.toml`
 

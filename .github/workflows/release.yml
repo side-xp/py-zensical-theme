@@ -5,52 +5,72 @@ on:
     branches:
       - main
 
+# Least privilege by default: each job asks for what it needs.
+permissions:
+  contents: read
+
 jobs:
 
+  # Analyzes the commits since the last release with python-semantic-release (configured in release.toml). If they call
+  # for a new version, it bumps the version files, updates the changelog, commits and tags the result on main, and
+  # publishes a GitHub Release with the built package attached. No release pull request to approve.
   release:
     runs-on: ubuntu-latest
+    # Two pushes to main in a row must not release in parallel, or the second run would compute its version from tags
+    # the first one hasn't pushed yet.
+    concurrency:
+      group: ${{ github.workflow }}-release-${{ github.ref_name }}
+      cancel-in-progress: false
     permissions:
       contents: write
-      pull-requests: write
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      released: ${{ steps.release.outputs.released || 'false' }}
+      tag: ${{ steps.release.outputs.tag }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      # Check out the branch itself (not a detached commit) so the release commit can be pushed back to it, then reset to
+      # the commit that triggered this run, so anything pushed meanwhile is never released without being evaluated.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Reset to the triggering commit
+        run: git reset --hard ${{ github.sha }}
+
+      - uses: python-semantic-release/python-semantic-release@v10.7.0
         id: release
         with:
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config_file: release.toml
+          git_committer_name: github-actions
+          git_committer_email: actions@users.noreply.github.com
 
-      # The steps below run only on the push that merges a release PR, i.e. when a
-      # new release was just cut. They build the distribution and attach it to the
-      # GitHub Release so consumer sites can pin a tag or download the wheel directly.
-      - uses: actions/checkout@v7
-        if: ${{ steps.release.outputs.release_created }}
-
+      # The steps below run only when a release was just made. The package is built here rather than through PSR's
+      # build_command, because PSR runs in its own container with a fixed Python version and no build tools.
       - uses: actions/setup-python@v6
-        if: ${{ steps.release.outputs.release_created }}
+        if: steps.release.outputs.released == 'true'
         with:
           python-version: 3.x
 
       - name: Build sdist and wheel
-        if: ${{ steps.release.outputs.release_created }}
+        if: steps.release.outputs.released == 'true'
         run: |
           pip install build
           python -m build
 
       - name: Attach build artifacts to the release
-        if: ${{ steps.release.outputs.release_created }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} dist/*
+        if: steps.release.outputs.released == 'true'
+        uses: python-semantic-release/publish-action@v10.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config_file: release.toml
+          tag: ${{ steps.release.outputs.tag }}
 
-  # Deploys the showcase to GitHub Pages and attaches a snapshot of the built site
-  # to the release. Runs only when the release job just cut a new release, so the
-  # live demo always matches the published version.
+  # Deploys the showcase to GitHub Pages and attaches a snapshot of the built site to the release. Runs only when the
+  # release job just cut a new release, so the live demo always matches the published version.
   docs:
     needs: release
-    if: ${{ needs.release.outputs.release_created == 'true' }}
+    if: ${{ needs.release.outputs.released == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -61,7 +81,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/configure-pages@v6
+
+      # Build from the release tag: the commit that triggered the workflow predates the release commit.
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.release.outputs.tag }}
+
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -74,7 +99,7 @@ jobs:
       - name: Attach the site to the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ needs.release.outputs.tag_name }} site.zip
+        run: gh release upload ${{ needs.release.outputs.tag }} site.zip
 
       - uses: actions/upload-pages-artifact@v5
         with:

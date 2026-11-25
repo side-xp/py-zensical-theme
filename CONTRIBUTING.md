@@ -149,9 +149,11 @@ As mentioned in the [*Suggesting enhancements or features*](https://github.com/s
 
 ## Releases
 
-Releases are automated with [release-please](https://github.com/googleapis/release-please). As [Conventional Commits](https://www.conventionalcommits.org) land on `main`, it maintains a "release" pull request that bumps the version in `pyproject.toml` and updates `CHANGELOG.md`. Merging that pull request creates the `vX.Y.Z` tag, publishes a GitHub Release, and attaches the compiled package (wheel + sdist) along with a snapshot of the showcase site.
+Releases are fully automated with [python-semantic-release](https://python-semantic-release.readthedocs.io), configured in `release.toml`. On every push to `main`, it reads the [Conventional Commits](https://www.conventionalcommits.org) made since the last release. If they call for a new version, it bumps the version in `pyproject.toml` and in the README install command, updates `CHANGELOG.md`, commits and tags the result as `vX.Y.Z`, and publishes a GitHub Release. The compiled package (wheel + sdist) and a snapshot of the showcase site are attached to that release. Nothing needs to be approved by hand.
 
-The version increment is derived from your commit messages, so following the Conventional Commits format matters: `fix:` triggers a patch release, `feat:` a minor one, and a `feat!:` (or a `BREAKING CHANGE:` footer) a major one.
+The version increment is derived from your commit messages, so following the Conventional Commits format matters: `fix:` (or `perf:`) triggers a patch release, `feat:` a minor one, and a `feat!:` (or a `BREAKING CHANGE:` footer) a major one. Other types, such as `docs:` or `chore:`, don't trigger a release on their own.
+
+> Note: the release commit is pushed to `main` only, so merge `main` back into `develop` after a release to keep both branches in sync.
 
 We currently do **not** require contributors to handle release generation (this is done internally).
 
